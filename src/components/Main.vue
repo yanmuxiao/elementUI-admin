@@ -4,27 +4,49 @@
     <div class="main-vue">
 
         <header class="el-header">
+            <el-row class="el-header-nav">
+                <el-col :span="24">
+                    <el-col :span="6" class="el-header-col el-header-logo">
+                        <h1  class="el-logo">LOGO</h1>
+                    </el-col>
+                    <el-col :span="2" class="el-header-col">
+                        <i class="el-icon-more el-aside-sh"></i>
+                    </el-col>
+                    <el-col :span="10" class="el-header-col el-menu-col">
 
-            <div class="el-header-nav">
+                        <el-menu theme="dark" class="el-menu-ul" mode="horizontal">
+                            <el-submenu index="2" class="el-user-li">
+                                <template slot="title">
 
-                <el-menu theme="dark" :default-active="activeIndex" class="el-menu-sync" mode="horizontal">
-                    <el-menu-item index="1">
-                      <router-link to="/">同步任务</router-link>
-                    </el-menu-item>
-                    <el-menu-item index="2">
-                      <router-link  to="/editForm">任务日志清单</router-link>
-                    </el-menu-item>
-                </el-menu>
+                                    admin
+                                    <img class="user-avatar" src="src/assets/user.png" />
 
-            </div>
+                                </template>
+                                <el-menu-item index="2-1">我的消息</el-menu-item>
+                                <el-menu-item index="2-2">设置</el-menu-item>
+                                <el-menu-item index="2-3">退出登录</el-menu-item>
+                            </el-submenu>
+                            <el-menu-item index="1">
+                              <router-link to="/syncTask">同步任务</router-link>
+                            </el-menu-item>
+                            <el-menu-item index="2">
+                              <router-link  to="/editForm">任务日志清单</router-link>
+                            </el-menu-item>
+                            
+                        </el-menu>
 
+                        
+
+                    </el-col>
+                </el-col> 
+            </el-row>
         </header>
 
         <aside class="el-aside">
             <div class="el-aside-scroll">
                 <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" unique-opened theme="dark" router>
 
-                    <el-menu-item index="/"><i class="el-icon-message"></i>控制台</el-menu-item>
+                    <el-menu-item index="index"><i class="el-icon-message"></i>控制台</el-menu-item>
 
 
                     <el-submenu index="2">
@@ -33,19 +55,19 @@
                         <el-menu-item index="layout">Layout 布局</el-menu-item>
                         <el-menu-item index="color">Color 色彩</el-menu-item>
                         <el-menu-item index="typography">Typography 字体</el-menu-item>
-                        <el-menu-item index="2-4">Icon 图标</el-menu-item>
-                        <el-menu-item index="2-5">Button 按钮</el-menu-item>
+                        <el-menu-item index="icon">Icon 图标</el-menu-item>
+                        <el-menu-item index="button">Button 按钮</el-menu-item>
 
                     </el-submenu>
 
                     <el-submenu index="3">
 
                       <template slot="title"><i class="el-icon-setting"></i>Form</template>
-                        <el-menu-item index="3-1">Radio 单选框</el-menu-item>
-                        <el-menu-item index="3-2">Checkbox 多选框</el-menu-item>
-                        <el-menu-item index="3-3">Input 输入框</el-menu-item>
-                        <el-menu-item index="3-4">InputNumber 计数器</el-menu-item>
-                        <el-menu-item index="3-5">Select 选择器</el-menu-item>
+                        <el-menu-item index="radio">Radio 单选框</el-menu-item>
+                        <el-menu-item index="checkbox">Checkbox 多选框</el-menu-item>
+                        <el-menu-item index="input">Input 输入框</el-menu-item>
+                        <el-menu-item index="inputNumber">InputNumber 计数器</el-menu-item>
+                        <el-menu-item index="select">Select 选择器</el-menu-item>
                         <el-menu-item index="3-6">Cascader 级联选择器</el-menu-item>
                         <el-menu-item index="3-7">Switch 开关</el-menu-item>
                         <el-menu-item index="3-8">Slider 滑块</el-menu-item>
@@ -107,11 +129,65 @@ html, body {
     left: 0;
     height: 60px;
     color: #cbcfd4;
+    background-color: #324157;
     z-index: 1000;
 }
-.el-menu-sync {
-    padding: 0 5%;
+.el-header .el-header-nav {
+    margin-bottom: 0;
 }
+.el-header-nav .el-menu {
+    border-radius: 0;
+}
+.el-header-col {
+    height: 60px;
+}
+.el-header-logo {
+    width: 200px;
+}
+.el-logo {
+    font-size: 24px;
+    margin: 0;
+    line-height: 60px;
+    text-align: center;
+}
+.el-aside-sh {
+    font-size: 24px;
+    line-height: 60px;
+    padding: 0 20px;
+    border-left: 1px solid hsla(62,77%,76%,.3);
+    cursor: pointer;
+}
+
+
+.el-header-col .el-menu-item {
+    padding: 0
+}
+.el-header-col .el-menu-item a {
+    display: block;
+    padding: 0 20px;
+    text-decoration: none;
+}
+.el-user-li .el-submenu>.el-menu {
+    left: -5px;
+}
+
+.el-menu-col {
+    float: right;
+    width: auto;
+}
+.el-menu-col .el-menu-ul li {
+    float: right;
+}
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    vertical-align: middle;
+}
+.el-user-li .el-icon-caret-bottom {
+    display: none;
+}
+
 
 
 .el-aside {
