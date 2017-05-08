@@ -50,6 +50,12 @@
 </style>
 
 <script>
+
+
+  import { user } from '../api/api.js'
+  console.log(user);
+
+
   
   export default {
     data() {
@@ -66,9 +72,12 @@
       loginFn() {
         this.logining = true;
         let _this = this;
+
+
         _.delay(()=>{
             _this.$router.push({ path: '/main' });
         }, 3000)
+        
       }
     }
   }
