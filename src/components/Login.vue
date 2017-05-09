@@ -1,15 +1,15 @@
 <template>
   
   <div class="el-login-model">
-      <el-form :model="ruleForm2">
+      <el-form :model="formData">
         <h3 class="model-title">系统登录</h3>
 
         <el-form-item prop="account">
-          <el-input type="text" v-model="ruleForm2.account" auto-complete="off" placeholder="账号"></el-input>
+          <el-input type="text" v-model="formData.account" auto-complete="off" placeholder="账号"></el-input>
         </el-form-item>
 
-        <el-form-item prop="checkPass">
-          <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="密码"></el-input>
+        <el-form-item prop="password">
+          <el-input type="password" v-model="formData.password" auto-complete="off" placeholder="密码"></el-input>
         </el-form-item>
 
         <el-checkbox v-model="checked" checked class="el-remember">记住密码</el-checkbox>
@@ -51,18 +51,25 @@
 
 <script>
 
+  
 
   import { user } from '../api/api.js'
-  console.log(user);
-
 
   
   export default {
     data() {
       return {
-        ruleForm2: {
+        formData: {
           account: 'admin',
-          checkPass: '123456'
+          password: '123456'
+        },
+        formValidate: {
+          account: [
+            { required: true, message: '请输入账号', trigger: 'blur' }
+          ],
+          password: [
+            { required: true, message: '请输入密码', trigger: 'blur' }
+          ]
         },
         checked: true,
         logining: false
@@ -73,10 +80,20 @@
         this.logining = true;
         let _this = this;
 
-
+        // 账号和密码验证
         _.delay(()=>{
-            _this.$router.push({ path: '/main' });
-        }, 3000)
+          if(this.formData.account == user.account && this.formData.password == user.password) {
+
+              _this.$router.push({ path: '/main', query: { id: '001'} });
+
+          } else {
+              this.logining = false;
+              this.$message({
+                message: '账号或密码不正确',
+                type: 'error'
+              });
+          }
+        }, 2000)
         
       }
     }

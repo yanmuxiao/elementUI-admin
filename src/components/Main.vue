@@ -17,10 +17,8 @@
                         <el-menu theme="dark" class="el-menu-ul" mode="horizontal">
                             <el-submenu index="2" class="el-user-li">
                                 <template slot="title">
-
-                                    admin
-                                    <img class="user-avatar" src="src/assets/user.png" />
-
+                                    {{ this.userInfo.nickName || this.userInfo.account }}
+                                    <img class="user-avatar" :src="this.userInfo.avatar" />
                                 </template>
                                 <el-menu-item index="2-1">我的消息</el-menu-item>
                                 <el-menu-item index="2-2">设置</el-menu-item>
@@ -230,10 +228,13 @@ html, body {
 
 <script>
     
+    import { userInfo } from '../api/api.js'
+    console.log(userInfo)
     export default {
         data() {
             return {
-                activeIndex: '1'
+                activeIndex: '1',
+                userInfo: userInfo
             }
         },
         methods: {
