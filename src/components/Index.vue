@@ -26,6 +26,9 @@
 		},
 		methods: {
 
+		},
+		created() {
+			console.log('Index导航完成后获取数据填充');
 		}
 	}
 

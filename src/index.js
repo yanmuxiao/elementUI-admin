@@ -40,7 +40,7 @@ export default new Router({
       component: MainVue,
       name: '',
       children: [
-          { path: '/', component: IndexVue},
+          { path: '', component: IndexVue},
           { path: '/index', component: IndexVue},
           { path: '/layout', component: LayoutVue, name: 'layout'},
           { path: '/color', component: ColorVue, name: 'color'},

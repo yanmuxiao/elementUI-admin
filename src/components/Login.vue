@@ -87,7 +87,7 @@
 
               sessionStorage.setItem('user', 'true');
 
-              _this.$router.push({ path: '/main', params: { userName: user[_this.formData.account].account } });
+              _this.$router.push({ path: '/main', query: { 'userName': user[_this.formData.account].account }});
 
           } else {
               this.logining = false;

@@ -230,11 +230,12 @@ html, body {
     
     import { userInfo } from '../api/api.js'
 
+
     export default {
         data() {
             return {
                 activeIndex: '1',
-                userInfo: userInfo['admin']
+                userInfo: userInfo[this.$route.query.userName]
             }
         },
         methods: {
@@ -253,6 +254,10 @@ html, body {
                     _this.$router.push('/login');
                 }).catch(() => {});
             }
+        },
+        created() {
+            console.log(this.$route.query)
+            console.log('导航完成后获取数据填充');
         }
     }
 
