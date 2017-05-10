@@ -24,16 +24,14 @@ import InputNumberVue from './components/form/InputNumber.vue'
 import SelectVue from './components/form/SelectLabel.vue'
 
 
-
-
 import syncTask from './components/sync-task.vue'
 import editForm from './components/edit-form.vue'
 
 
 export default new Router({
-  routes: [
+    routes: [
     {
-      path: '/',
+      path: '/login',
       component: LoginVue,
       name: ''
     },

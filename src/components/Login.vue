@@ -53,7 +53,7 @@
 
   
 
-  import { user } from '../api/api.js'
+  import { userInfo as user } from '../api/api.js'
 
   
   export default {
@@ -82,9 +82,12 @@
 
         // 账号和密码验证
         _.delay(()=>{
-          if(this.formData.account == user.account && this.formData.password == user.password) {
 
-              _this.$router.push({ path: '/main', query: { id: '001'} });
+          if(this.formData.account == user[this.formData.account].account && this.formData.password == user[this.formData.account].password) {
+
+              sessionStorage.setItem('user', 'true');
+
+              _this.$router.push({ path: '/main', params: { userName: user[_this.formData.account].account } });
 
           } else {
               this.logining = false;
@@ -93,6 +96,7 @@
                 type: 'error'
               });
           }
+          
         }, 2000)
         
       }

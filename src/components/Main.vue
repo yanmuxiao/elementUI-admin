@@ -22,7 +22,7 @@
                                 </template>
                                 <el-menu-item index="2-1">我的消息</el-menu-item>
                                 <el-menu-item index="2-2">设置</el-menu-item>
-                                <el-menu-item index="2-3">退出登录</el-menu-item>
+                                <el-menu-item index="2-3" @click="loginOut">退出登录</el-menu-item>
                             </el-submenu>
                             <el-menu-item index="1">
                               <router-link to="/syncTask">同步任务</router-link>
@@ -42,14 +42,14 @@
 
         <aside class="el-aside">
             <div class="el-aside-scroll">
-                <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" unique-opened theme="dark" router>
+                <el-menu :default-active="$route.path == '/main' ? 'index' : $route.path.replace('/','')" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" unique-opened theme="dark" router>
 
                     <el-menu-item index="index"><i class="el-icon-message"></i>控制台</el-menu-item>
 
 
                     <el-submenu index="2">
 
-                      <template slot="title"><i class="el-icon-message"></i>Basic</template>
+                        <template slot="title"><i class="el-icon-message"></i>Basic</template>
                         <el-menu-item index="layout">Layout 布局</el-menu-item>
                         <el-menu-item index="color">Color 色彩</el-menu-item>
                         <el-menu-item index="typography">Typography 字体</el-menu-item>
@@ -229,12 +229,12 @@ html, body {
 <script>
     
     import { userInfo } from '../api/api.js'
-    console.log(userInfo)
+
     export default {
         data() {
             return {
                 activeIndex: '1',
-                userInfo: userInfo
+                userInfo: userInfo['admin']
             }
         },
         methods: {
@@ -243,6 +243,15 @@ html, body {
             },
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
+            },
+            loginOut() {
+                var _this = this;
+                this.$confirm('确认退登录吗?', '提示', {
+                    //type: 'warning'
+                }).then(() => {
+                    sessionStorage.removeItem('user');
+                    _this.$router.push('/login');
+                }).catch(() => {});
             }
         }
     }
