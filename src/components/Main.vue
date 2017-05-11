@@ -96,130 +96,129 @@
 
 </template>
 
-<style>
-body {
-  font-family: Helvetica, sans-serif;
-  margin: 0;
-}
-html, body {
-    height: 100%;
-    min-height: 400px;
-    overflow: hidden;
-}
-.el-app {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
+
+<style  lang="scss">
+    body {
+      font-family: Helvetica, sans-serif;
+      margin: 0;
+    }
+    html, body {
+        height: 100%;
+        min-height: 400px;
+        overflow: hidden;
+    }
+    .el-app {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .main-vue {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    $color: #324157;
+    .el-header {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 60px;
+        color: #cbcfd4;
+        background-color: $color;
+        z-index: 1000;
+    }
+    .el-header .el-header-nav {
+        margin-bottom: 0;
+    }
+    .el-header-nav .el-menu {
+        border-radius: 0;
+    }
+    .el-header-col {
+        height: 60px;
+    }
+    .el-header-logo {
+        width: 200px;
+    }
+    .el-logo {
+        font-size: 24px;
+        margin: 0;
+        line-height: 60px;
+        text-align: center;
+    }
+    .el-aside-sh {
+        font-size: 24px;
+        line-height: 60px;
+        padding: 0 20px;
+        border-left: 1px solid hsla(62,77%,76%,.3);
+        cursor: pointer;
+    }
 
 
-.main-vue {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
+    .el-header-col .el-menu-item {
+        padding: 0
+    }
+    .el-header-col .el-menu-item a {
+        display: block;
+        padding: 0 20px;
+        text-decoration: none;
+    }
+    .el-user-li .el-submenu>.el-menu {
+        left: -5px;
+    }
 
-
-.el-header {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 60px;
-    color: #cbcfd4;
-    background-color: #324157;
-    z-index: 1000;
-}
-.el-header .el-header-nav {
-    margin-bottom: 0;
-}
-.el-header-nav .el-menu {
-    border-radius: 0;
-}
-.el-header-col {
-    height: 60px;
-}
-.el-header-logo {
-    width: 200px;
-}
-.el-logo {
-    font-size: 24px;
-    margin: 0;
-    line-height: 60px;
-    text-align: center;
-}
-.el-aside-sh {
-    font-size: 24px;
-    line-height: 60px;
-    padding: 0 20px;
-    border-left: 1px solid hsla(62,77%,76%,.3);
-    cursor: pointer;
-}
-
-
-.el-header-col .el-menu-item {
-    padding: 0
-}
-.el-header-col .el-menu-item a {
-    display: block;
-    padding: 0 20px;
-    text-decoration: none;
-}
-.el-user-li .el-submenu>.el-menu {
-    left: -5px;
-}
-
-.el-menu-col {
-    float: right;
-    width: auto;
-}
-.el-menu-col .el-menu-ul li {
-    float: right;
-}
-.user-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
-    vertical-align: middle;
-}
-.el-user-li .el-icon-caret-bottom {
-    display: none;
-}
+    .el-menu-col {
+        float: right;
+        width: auto;
+    }
+    .el-menu-col .el-menu-ul li {
+        float: right;
+    }
+    .user-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        vertical-align: middle;
+    }
+    .el-user-li .el-icon-caret-bottom {
+        display: none;
+    }
 
 
 
-.el-aside {
-    position: absolute;
-    left: 0;
-    top: 60px;
-    bottom: 0;
-    width: 200px;
-    z-index: 1000;
-    background-color: #324157;
-    overflow: hidden;
-}
-.el-aside-scroll {
-    width: 220px;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-.el-aside-scroll .el-menu-vertical-demo {
-    width: 200px;
-}
+    .el-aside {
+        position: absolute;
+        left: 0;
+        top: 60px;
+        bottom: 0;
+        width: 200px;
+        z-index: 1000;
+        background-color: #324157;
+        overflow: hidden;
+    }
+    .el-aside-scroll {
+        width: 220px;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .el-aside-scroll .el-menu-vertical-demo {
+        width: 200px;
+    }
 
 
-.el-main {
-    position: absolute;
-    left: 200px;
-    top: 60px;
-    bottom: 0;
-    right: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    padding: 15px;
-}
+    .el-main {
+        position: absolute;
+        left: 200px;
+        top: 60px;
+        bottom: 0;
+        right: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        box-sizing: border-box;
+        padding: 15px;
+    }
 
 
 </style>
@@ -235,7 +234,7 @@ html, body {
         data() {
             return {
                 activeIndex: '1',
-                userInfo: userInfo[this.$route.query.userName]
+                userInfo: userInfo['admin']
             }
         },
         methods: {
@@ -250,14 +249,15 @@ html, body {
                 this.$confirm('确认退登录吗?', '提示', {
                     //type: 'warning'
                 }).then(() => {
+
                     sessionStorage.removeItem('user');
                     _this.$router.push('/login');
+
                 }).catch(() => {});
             }
         },
         created() {
-            console.log(this.$route.query)
-            console.log('导航完成后获取数据填充');
+            console.log(this.$route.query.userName)
         }
     }
 

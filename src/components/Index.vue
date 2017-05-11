@@ -2,16 +2,19 @@
 
 	<div class="">
 		
-		<h2>控制台</h2>
+		<h2 class="control">控制台</h2>
 
 
 	</div>
 
 </template>
 
-<style>
-	
+<style lang="scss">
 
+$color: #f00;
+.control {
+	color: $color
+}
 
 </style>
 

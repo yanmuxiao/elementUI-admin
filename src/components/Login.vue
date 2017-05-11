@@ -12,7 +12,7 @@
           <el-input type="password" v-model="formData.password" auto-complete="off" placeholder="密码"></el-input>
         </el-form-item>
 
-        <el-checkbox v-model="checked" checked class="el-remember">记住密码</el-checkbox>
+        <el-checkbox v-model="checked" class="el-remember">记住密码</el-checkbox>
 
 
         <el-form-item style="width:100%;">
@@ -54,14 +54,16 @@
   
 
   import { userInfo as user } from '../api/api.js'
+  import { setCookie, getCookieValue, deleteCookie } from '../static/cookie.js'
 
+  import MD5 from 'MD5/md5.js' // MD5
   
   export default {
     data() {
       return {
         formData: {
-          account: 'admin',
-          password: '123456'
+          account: '',
+          password: ''
         },
         formValidate: {
           account: [
@@ -71,7 +73,7 @@
             { required: true, message: '请输入密码', trigger: 'blur' }
           ]
         },
-        checked: true,
+        checked: false,
         logining: false
       }
     },
@@ -83,23 +85,44 @@
         // 账号和密码验证
         _.delay(()=>{
 
-          if(this.formData.account == user[this.formData.account].account && this.formData.password == user[this.formData.account].password) {
+          if(user[this.formData.account] && this.formData.account == user[this.formData.account].account && this.formData.password == user[this.formData.account].password) {
 
               sessionStorage.setItem('user', 'true');
+
+              if(_this.checked) {
+                  setCookie('vueUser', this.formData.account, 0.05, 'abcdefg')
+                  setCookie('vuePassword', this.formData.password, '0.05', 'abcdefg')
+              } else {
+                  deleteCookie('vueUser');
+                  deleteCookie('vuePassword');
+              }
 
               _this.$router.push({ path: '/main', query: { 'userName': user[_this.formData.account].account }});
 
           } else {
+
               this.logining = false;
               this.$message({
                 message: '账号或密码不正确',
                 type: 'error'
               });
+
           }
           
         }, 2000)
         
       }
+    },
+    created() {
+        
+        if(getCookieValue('vueUser') != '') {
+            this.formData.account = getCookieValue('vueUser');
+            if(getCookieValue('vuePassword') != '') {
+                this.formData.password = getCookieValue('vuePassword');
+                this.checked = true;
+            }
+        }
+
     }
   }
 
