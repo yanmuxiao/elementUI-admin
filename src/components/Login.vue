@@ -25,7 +25,7 @@
 
 </template>
 
-<style>
+<style  lang="scss">
     
     .el-login-model {
         border-radius: 5px;
@@ -37,14 +37,15 @@
         background: #fff;
         border: 1px solid #eaeaea;
         box-shadow: 0 0 25px #cac6c6;
+        .model-title {
+            margin: 0 auto 20px;
+            text-align: center;
+        }
+        .el-remember {
+            margin-bottom: 35px;
+        }
     }
-    .model-title {
-        margin: 0 auto 20px;
-        text-align: center;
-    }
-    .el-remember {
-        margin-bottom: 35px;
-    }
+    
 
 
 </style>
@@ -88,6 +89,7 @@
           if(user[this.formData.account] && this.formData.account == user[this.formData.account].account && this.formData.password == user[this.formData.account].password) {
 
               sessionStorage.setItem('user', 'true');
+              sessionStorage.setItem('token', '123456789');
 
               if(_this.checked) {
                   setCookie('vueUser', this.formData.account, 0.05, 'abcdefg')

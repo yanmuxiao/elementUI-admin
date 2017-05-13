@@ -28,36 +28,38 @@ import syncTask from './components/sync-task.vue'
 import editForm from './components/edit-form.vue'
 
 
+
+
 export default new Router({
     routes: [
-    {
-      path: '/login',
-      component: LoginVue,
-      name: ''
-    },
-    {
-      path: '/main',
-      component: MainVue,
-      name: '',
-      children: [
-          { path: '', component: IndexVue},
-          { path: '/index', component: IndexVue},
-          { path: '/layout', component: LayoutVue, name: 'layout'},
-          { path: '/color', component: ColorVue, name: 'color'},
-          { path: '/typography', component: TypographyVue, name: 'typography'},
-          { path: '/icon', component: IconVue, name: 'icon'},
-          { path: '/button', component: ButtonVue, name: 'button'},
+      {
+        path: '/login',
+        component: LoginVue,
+        name: ''
+      },
+      {
+        path: '/main',
+        component: MainVue,
+        name: '',
+        children: [
+            { path: '', component: IndexVue},
+            { path: '/index', component: IndexVue},
+            { path: '/layout', component: LayoutVue, name: 'layout'},
+            { path: '/color', component: ColorVue, name: 'color'},
+            { path: '/typography', component: TypographyVue, name: 'typography'},
+            { path: '/icon', component: IconVue, name: 'icon'},
+            { path: '/button', component: ButtonVue, name: 'button'},
 
 
-          { path: '/radio', component: RadioVue, name: 'radio'},
-          { path: '/checkbox', component: CheckboxVue, name: 'checkbox'},
-          { path: '/input', component: InputVue, name: 'input'},
-          { path: '/inputNumber', component: InputNumberVue, name: 'inputNumber'},
-          { path: '/select', component: SelectVue, name: 'select'},
+            { path: '/radio', component: RadioVue, name: 'radio'},
+            { path: '/checkbox', component: CheckboxVue, name: 'checkbox'},
+            { path: '/input', component: InputVue, name: 'input'},
+            { path: '/inputNumber', component: InputNumberVue, name: 'inputNumber'},
+            { path: '/select', component: SelectVue, name: 'select'},
 
-          { path: '/syncTask', component: syncTask, name: 'syncTask'},
-          { path: '/editForm', component: editForm, name: 'editForm'}
-      ]
-    }
-  ]
+            { path: '/syncTask', component: syncTask, name: 'syncTask'},
+            { path: '/editForm', component: editForm, name: 'editForm'}
+        ]
+      }
+    ]
 })
