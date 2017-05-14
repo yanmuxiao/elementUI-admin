@@ -136,37 +136,7 @@
 <script>
   
   import "../static/dateFormat.js" // 日期格式化
-
-
-  import Lodash from 'lodash' 
-
-
-  import $ from 'jquery/dist/jquery.min.js'
-  import Mock from 'mockjs/dist/mock-min.js'
-  // table的所有数据
-  let taskListObj = Mock.mock({
-      'taskList|200': [{
-          'date': '@date',
-          'name': '@name',
-          'province': '@province',
-          'city': '@city',
-          'address': '@county(true)',
-          'zip': 200333,
-          'id': '009'
-      }]
-  });
-  // 这种写法在可删除的table中有瑕疵而且每一页的条数必须固定
-  let chunkArr = _.chunk(taskListObj.taskList, 20);// 拆页
-  _.forEach(chunkArr, function(value, index) {
-      Mock.mock('http://g.cn?page='+ (parseInt(index) + 1), chunkArr[index]);
-  })
-  Mock.mock('http://taskListCountPageCount.cn', {
-      taskListCount: taskListObj.taskList.length,
-      pageCount: chunkArr.length
-  });
-
-
-  
+  import { getTaskList } from '../api/api.js'
 
 
   export default {
@@ -174,27 +144,16 @@
 
       // 导航完成之后获取数据
       fetchData(page) {
-          let _this = this;
-          $.ajax({
-              url: 'http://g.cn?page=' + page,
-              dataType:'json',
-              type: "GET"
-          }).done(function(dataObj, status, xhr){
-              _this.tableData3.length = 0;
-              _this.tableData3 = _this.tableData3.concat(dataObj)
-          })
-      },
+          let loadingInstance = this.$loading({ 
+            fullscreen: true,
+            customClass: 'loadingClass'
+          });
+          getTaskList(page).then(data => {
+              this.tableData3.length = 0;
+              this.tableData3 = this.tableData3.concat(data.pageData);
+              this.taskListCount = data.total;
 
-      // 分页
-      paginationFn() {
-          let _this = this;
-          $.ajax({
-              url: 'http://taskListCountPageCount.cn',
-              dataType:'json',
-              type: "GET"
-          }).done(function(dataObj, status, xhr){
-              _this.taskListCount = dataObj.taskListCount;
-              _this.pageCount = dataObj.pageCount;
+              loadingInstance.close();
           })
       },
 
@@ -358,11 +317,11 @@
       },
 
       handleSizeChange(val) {
-        this.fetchData(val)
+        this.fetchData({currentPage: val});
       },
       handleCurrentChange(val) {
         this.currentPage = val;
-        this.fetchData(val);
+        this.fetchData({currentPage: val});
       }
 
     },
@@ -399,8 +358,7 @@
 
     },
     created() {
-        this.fetchData(1);// 导航完成之后获取数据
-        this.paginationFn();
+        this.fetchData({currentPage: this.currentPage});// 导航完成之后获取数据
     }
 }
 </script>

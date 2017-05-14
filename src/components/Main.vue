@@ -227,14 +227,17 @@
 
 <script>
     
-    import { userInfo } from '../api/api.js'
+    import { setCookie, getCookieValue, deleteCookie } from '../static/cookie.js'
 
 
     export default {
         data() {
             return {
                 activeIndex: '1',
-                userInfo: userInfo['admin']
+                userInfo: {
+                    nickName: '',
+                    avata: ''
+                }
             }
         },
         methods: {
@@ -258,6 +261,10 @@
         },
         created() {
             console.log(this.$route.query.userName)
+
+            this.userInfo.nickName = getCookieValue('nickName') || getCookieValue('account');
+
+            this.userInfo.avatar = getCookieValue('avatar');
         }
     }
 

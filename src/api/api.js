@@ -1,20 +1,17 @@
 
+import Mock from './../mockData/dataAPI.js'
+Mock.bootstrap();
 
-export let userInfo = (() => {
-	return {
-		'admin': {
-			id: '001',
-			account: 'admin',
-			password: '123456',
-			avatar: 'https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png',
-	    	nickName: 'adminNickName'
-		},
-		'zmm': {
-			id: '002',
-			account: 'zmm',
-			password: '654321',
-			avatar: 'https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png',
-	    	nickName: '张NickName'
-		}
-	}
-})();
+import axios from 'axios';
+
+
+let base = '';
+
+// 用户登录接口
+export const requestLogin = params => { 
+	return axios.post(`${base}/login`, params).then(res => res.data); 
+};
+
+export const getTaskList = params => { 
+	return axios.post(`${base}/syncTask`, params).then(res => res.data); 
+};

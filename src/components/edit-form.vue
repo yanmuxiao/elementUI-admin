@@ -65,9 +65,8 @@
 <script>
 
   
-  import $ from 'jquery/dist/jquery.min.js'
   import Mock from 'mockjs/dist/mock-min.js'
-
+  import axios from 'axios'
 
   let taskListObj = Mock.mock({
       'taskList|1': [{
@@ -82,6 +81,7 @@
       }]
   });
   Mock.mock('http://editform.cn',taskListObj.taskList);
+
 
 
 
@@ -109,14 +109,12 @@
       // 导航完成之后获取数据
       fetchData() {
           let _this = this;
-          $.ajax({
-              url: 'http://editform.cn',
-              dataType:'json',
-              type: "GET"
-          }).done(function(dataObj, status, xhr){
-
-              _this.form = dataObj
-
+          axios.get('http://editform.cn')
+          .then((respone) => {
+              _this.form = respone.data;
+          })
+          .catch((error) => {
+              console.log(error);
           })
       }
     },
