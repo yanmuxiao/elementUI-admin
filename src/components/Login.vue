@@ -111,15 +111,14 @@
                 this.logining = false;
             } else {
                 sessionStorage.setItem('user', user.token);
+                // 记住用户昵称和头像
+                setCookie('nickName', user.nickName)
+                setCookie('avatar', user.avatar)
+                
                 if(this.checked) {
                     // 记住用户和密码
                     setCookie('vueUser', this.formData.account, 0.05, 'abcdefg')
                     setCookie('vuePassword', encryptedPW, '0.05', 'abcdefg')
-
-                    // 记住用户昵称和头像
-                    setCookie('nickName', user.nickName, 0.05, 'abcdefg')
-                    setCookie('avatar', user.avatar, 0.05, 'abcdefg')
-
                 } else {
                     deleteCookie('vueUser');
                     deleteCookie('vuePassword');

@@ -23,8 +23,8 @@ let taskListObj = Mock.mock({
       'province': '@province',
       'city': '@city',
       'address': '@county(true)',
-      'zip': 200333,
-      'id': '009'
+      'zip|+1': 10,
+      'id|+1': 1000
   }]
 });
 

@@ -11,6 +11,7 @@ export default {
 	bootstrap() {
 
 		let mock = new MockAdapter(axios);
+		let userList = taskListObj.taskList;
 
 		// mock success request
 	    mock.onGet('/success').reply(200, {
@@ -22,7 +23,7 @@ export default {
 	      msg: 'failure'
 	    });
 
-	    //登录
+	    //登录信息验证返回
 	    mock.onPost('/login').reply(config => {
 	      let {username, password} = JSON.parse(config.data);
 	      return new Promise((resolve, reject) => {
@@ -45,20 +46,30 @@ export default {
 	    });
 
 
-	    mock.onPost('/syncTask').reply(config => {
+	    // 用户列表返回
+	    mock.onPost('/userList').reply(config => {
 	      let { currentPage } = JSON.parse(config.data);
 	      let start = (currentPage - 1) * 20;
 	      let end = currentPage * 20;
-
 	      return new Promise((resolve, reject) => {
 	        setTimeout(() => {
-	          let totalNum = taskListObj.taskList.length;
+	          let totalNum = userList.length;
 	          if ( totalNum >= 20) {
-	            resolve([200, { code: 200, msg: '请求成功', total: totalNum, pageData: _.slice(taskListObj.taskList, start, end) }]);
+	            resolve([200, { code: 200, msg: '请求成功', total: totalNum, pageData: _.slice(userList, start, end) }]);
 	          } else {
-	            resolve([200, { code: 200, msg: '请求成功1', total: totalNum, pageData: taskListObj.taskList }]);
+	            resolve([200, { code: 200, msg: '请求成功1', total: totalNum, pageData: userList }]);
 	          }
+	        }, 1000);
+	      });
+	    });
 
+	    // 用户列表返回
+	    mock.onPost('/rmUserList').reply(config => {
+	      let { rmObj } = JSON.parse(config.data);
+	      userList = _.differenceBy(userList, rmObj, 'id');
+	      return new Promise((resolve, reject) => {
+	        setTimeout(() => {
+	          resolve([200, { code: 200, msg: '请求成功' }]);
 	        }, 1000);
 	      });
 	    });

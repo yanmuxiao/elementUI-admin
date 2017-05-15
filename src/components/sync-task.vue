@@ -120,13 +120,10 @@
   .el-btn-wrap {
       padding-bottom: 15px;
   }
-
   .el-pagination {
       padding: 30px 0;
       text-align: center;
   }
-
-
   .loadingClass {
       background-color: rgba(0,0,0,0.1);
   }
@@ -136,7 +133,7 @@
 <script>
   
   import "../static/dateFormat.js" // 日期格式化
-  import { getTaskList } from '../api/api.js'
+  import { getUserList, removeUserList } from '../api/api.js'
 
 
   export default {
@@ -148,11 +145,10 @@
             fullscreen: true,
             customClass: 'loadingClass'
           });
-          getTaskList(page).then(data => {
+          getUserList(page).then(data => {
               this.tableData3.length = 0;
               this.tableData3 = this.tableData3.concat(data.pageData);
               this.taskListCount = data.total;
-
               loadingInstance.close();
           })
       },
@@ -161,26 +157,14 @@
       deleteRow(index, rows) {
 
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          
           type: 'warning'
         }).then(() => {
-
             let loadingInstance = this.$loading({ 
               fullscreen: true,
               customClass: 'loadingClass'
             });
-
-            let _this = this;
-            _.delay(function(){
-
-                rows.splice(index, 1);
-                _this.$message({
-                  type: 'success',
-                  message: '删除成功!'
-                });
-                loadingInstance.close();
-
-            },3000)
+            removeUserList({rmObj: [rows[index]]})
+            this.fetchData({currentPage: this.currentPage});
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -235,33 +219,12 @@
           type: 'warning'
 
         }).then(() => {
-
             let loadingInstance = this.$loading({ 
               fullscreen: true,
               customClass: 'loadingClass'
             });
-
-            let _this = this;
-
-            // 第一种方法(一般不会删除很多，所以觉得这种更好)
-            _.delay(function() {
-                _.forEach(_this.selected,function(value) {
-                    let index = _.findIndex(_this.tableData3, value);
-                    if (index > -1) {
-                      _this.tableData3.splice(index, 1);
-                    }
-                })
-
-                // 第二种方法
-                //_this.tableData3 = _.difference(_this.tableData3, _this.selected)
-
-
-                _this.$message({
-                  type: 'success',
-                  message: '删除成功!'
-                });
-                loadingInstance.close();
-            },3000)
+            removeUserList({rmObj: this.selected})
+            this.fetchData({currentPage: this.currentPage});
 
         }).catch(() => {
           this.$message({

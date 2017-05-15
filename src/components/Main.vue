@@ -25,10 +25,10 @@
                                 <el-menu-item index="2-3" @click="loginOut">退出登录</el-menu-item>
                             </el-submenu>
                             <el-menu-item index="1">
-                              <router-link to="/syncTask">同步任务</router-link>
+                              <router-link to="/syncTask">用户列表</router-link>
                             </el-menu-item>
                             <el-menu-item index="2">
-                              <router-link  to="/editForm">任务日志清单</router-link>
+                              <router-link  to="/editForm">添加用户</router-link>
                             </el-menu-item>
                             
                         </el-menu>
