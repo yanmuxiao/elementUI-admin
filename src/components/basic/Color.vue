@@ -122,8 +122,10 @@
 
 </template>
 
-<style>
+<style lang="scss">
 	
+	$bgColor: background-color;
+
 	.color-grid {
 		height: 40px;
 		color: #fff;
@@ -134,70 +136,70 @@
 
 
 	.color-light-blue {
-		background-color: #58B7FF;
+		#{$bgColor}: #58B7FF;
 	}
 	.color-blue {
-		background-color: #20A0FF;
+		#{$bgColor}: #20A0FF;
 	}
 	.color-dark-blue {
-		background-color: #1D8CE0;
+		#{$bgColor}: #1D8CE0;
 	}
 
 
 
 	.color-sucess {
-		background-color: #13CE66;
+		#{$bgColor}: #13CE66;
 	}
 	.color-warning {
-		background-color: #F7BA2A;
+		#{$bgColor}: #F7BA2A;
 	}
 	.color-danger {
-		background-color: #FF4949;
+		#{$bgColor}: #FF4949;
 	}
 
 
 	.color-black {
-		background-color: #1F2D3D;
+		#{$bgColor}: #1F2D3D;
 	}
 	.color-light-black {
-		background-color: #324057;
+		#{$bgColor}: #324057;
 	}
 	.color-extra-light-black {
-		background-color: #475669;
+		#{$bgColor}: #475669;
 	}
 
 
 	.color-silver {
-		background-color: #8492A6;
+		#{$bgColor}: #8492A6;
 	}
 	.color-light-silver {
-		background-color: #99A9BF;
+		#{$bgColor}: #99A9BF;
 	}
 	.color-extra-light-silver {
-		background-color: #C0CCDA;
+		#{$bgColor}: #C0CCDA;
 	}
 
 
 	.color-gray {
-		background-color: #D3DCE6;
+		#{$bgColor}: #D3DCE6;
 		color: #5e6d82;
 	}
 	.color-light-gray {
-		background-color: #E5E9F2;
+		#{$bgColor}: #E5E9F2;
 		color: #5e6d82;
 	}
 	.color-extra-light-gray {
-		background-color: #EFF2F7;
+		#{$bgColor}: #EFF2F7;
 		color: #5e6d82;
 	}
 
 
 	.color-dark-white {
-		background-color: #F9FAFC;
+		#{$bgColor}: #F9FAFC;
 		color: #5e6d82;
 	}
 	.color-white {
-		background-color: #FFF;
+		#{$bgColor}: #FFF;
 		color: #5e6d82;
 	}
 

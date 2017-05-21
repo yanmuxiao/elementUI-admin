@@ -5,11 +5,18 @@ import Mock from 'mockjs';
 const LoginUsers = [
   {
     id: '001',
-	username: 'admin',
-	password: '951c1f757a9f918f0624cd5cb90b890d33f4cd2a6e455672c47140dec13d1404',
-	avatar: 'https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png',
-	nickName: 'adminNickName',
-	token: Date.now()
+  	username: 'admin',
+  	password: '951c1f757a9f918f0624cd5cb90b890d33f4cd2a6e455672c47140dec13d1404',
+  	avatar: 'https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png',
+  	nickName: 'adminNickName',
+  	token: Date.now()
+  },{
+    id: '002',
+    username: 'yanmuxiao',
+    password: '951c1f757a9f918f0624cd5cb90b890d33f4cd2a6e455672c47140dec13d1404',
+    avatar: 'https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png',
+    nickName: 'yanmuxiaoNN',
+    token: Date.now()
   }
 ];
 

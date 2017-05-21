@@ -145,12 +145,14 @@
 
 </template>
 
-<style>
+<style lang="scss">
+	
+	$bd-eee: 1px solid #eee;
 	
 	.el-icon-w {
 		font-size: 0;
-		border-left: 1px solid #eee;
-		border-top: 1px solid #eee;
+		border-left: $bd-eee;
+		border-top: $bd-eee;
 	}
 	.icon-w {
 		display: inline-block;
@@ -161,8 +163,8 @@
 		text-align: center;
 	    color: #666;
 	    font-size: 16px;
-	    border-right: 1px solid #eee;
-	    border-bottom: 1px solid #eee;
+	    border-right: $bd-eee;
+	    border-bottom: $bd-eee;
 	}
 	.icon-w > i {
 		font-size: 24px;

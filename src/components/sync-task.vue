@@ -3,8 +3,14 @@
   <div class="router-view">
 
       <div class="el-btn-wrap">
-          <el-button type="danger">新建</el-button>
-          <el-button type="info" @click="batchDelete">删除</el-button>
+          <el-input class="search-ipt"
+            placeholder="请选择日期"
+            icon="search"
+            v-model="searchVal"
+            :on-icon-click="searchIconClick">
+          </el-input>
+          <el-button type="danger" @click="newUser">新建</el-button>
+          <el-button type="info" @click="batchDelete">批量删除</el-button>
       </div>
 
 
@@ -60,7 +66,7 @@
 
               <template scope="scope">
                 <el-button type="text" @click="deleteRow(scope.$index, tableData3)" size="small">删除</el-button>
-                <el-button type="text" @click="dialogFormVisible = true" size="small">编辑</el-button>
+                <el-button type="text" @click="editRow(scope.$index, tableData3)" size="small">编辑</el-button>
               </template>
 
             </el-table-column>
@@ -120,6 +126,10 @@
   .el-btn-wrap {
       padding-bottom: 15px;
   }
+  .search-ipt {
+      width: 200px;
+      margin-right: 10px;
+  }
   .el-pagination {
       padding: 30px 0;
       text-align: center;
@@ -133,7 +143,8 @@
 <script>
   
   import "../static/dateFormat.js" // 日期格式化
-  import { getUserList, removeUserList } from '../api/api.js'
+  import { getUserList, removeUserList, editUserList, addUserList } from '../api/api.js'
+
 
 
   export default {
@@ -145,12 +156,16 @@
             fullscreen: true,
             customClass: 'loadingClass'
           });
-          getUserList(page).then(data => {
-              this.tableData3.length = 0;
-              this.tableData3 = this.tableData3.concat(data.pageData);
-              this.taskListCount = data.total;
-              loadingInstance.close();
+
+          getUserList(page).then(res => {
+              if(res.data.code == 200) {
+                  this.tableData3.length = 0;
+                  this.tableData3 = this.tableData3.concat(res.data.pageData);
+                  this.taskListCount = res.data.total;
+                  loadingInstance.close();
+              }
           })
+          
       },
 
       // 删除行
@@ -163,8 +178,13 @@
               fullscreen: true,
               customClass: 'loadingClass'
             });
-            removeUserList({rmObj: [rows[index]]})
-            this.fetchData({currentPage: this.currentPage});
+
+            removeUserList({rmObj: [rows[index]]}).then(res => {
+                if(res.data.code == 200) {
+                  this.fetchData({currentPage: this.currentPage, searchVal: this.searchVal});
+                }
+            })
+
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -172,6 +192,41 @@
           });  
         });
 
+      },
+
+      editRow(index, row) {
+
+          this.addEdit = 'edit';
+
+          let rowObj = row[index];
+          this.form.name = rowObj.name;
+          this.form.province = rowObj.province;
+          this.form.date = rowObj.date;
+          this.form.city = rowObj.city;
+          this.form.address = rowObj.address;
+          this.form.zip = rowObj.zip;
+          this.form.id = rowObj.id;
+          this.dialogFormVisible = true;
+        
+      },
+      newUser() {
+
+          this.addEdit = 'add';
+
+          this.form.name = '';
+          this.form.province = '';
+          this.form.date = '';
+          this.form.city = '';
+          this.form.address = '';
+          this.form.zip = '';
+          this.form.id = '';
+
+          this.dialogFormVisible = true;
+      },
+
+      searchIconClick() {
+            this.currentPage = 1;
+            this.fetchData({currentPage: 1, searchVal: this.searchVal});
       },
 
       // 全选(参数为tableData)
@@ -223,8 +278,11 @@
               fullscreen: true,
               customClass: 'loadingClass'
             });
-            removeUserList({rmObj: this.selected})
-            this.fetchData({currentPage: this.currentPage});
+            removeUserList({rmObj: this.selected}).then(res => {
+                if(res.data.code == 200) {
+                    this.fetchData({currentPage: this.currentPage, searchVal: this.searchVal});
+                }
+            })
 
         }).catch(() => {
           this.$message({
@@ -244,47 +302,32 @@
             customClass: 'loadingClass'
           });
 
-          let _this = this;
-          $.ajax({
-              type: 'POST',
-              url: 'http://g.cn?page=1',
-              dataType:'json'
-          }).done(function(data, status, xhr){
+          this.form.date = new Date(this.form.date).format("yyyy-MM-dd");
 
-              _.delay(function() {
-                _this.dialogFormVisible = false;
-                _this.tableData3.unshift({
-                  date: _this.form.date.format("yyyy-MM-dd"),
-                  name: _this.form.name,
-                  province: _this.form.province,
-                  city: _this.form.city,
-                  address: _this.form.address,
-                  zip: _this.form.zip
-                });
-                _this.$message({
-                  type: 'success',
-                  message: '保存成功'
-                })
-                _this.form.date = '';
-                _this.form.name = '';
-                _this.form.name = '';
-                _this.form.province = '';
-                _this.form.city = '';
-                _this.form.address = '';
-                _this.form.zip = '';
-                loadingInstance.close();
-            }, 3000)
-
-          });
-     
+          if(this.addEdit == 'edit') {
+              editUserList({editForm: this.form}).then(res => {
+                  if(res.data.code == 200) {
+                      this.dialogFormVisible = false;
+                      this.fetchData({currentPage: this.currentPage, searchVal: this.searchVal});
+                  }
+              })
+          } else {
+              addUserList({addUserForm: this.form}).then(res => {
+                  if(res.data.code == 200) {
+                      this.dialogFormVisible = false;
+                      this.fetchData({currentPage: this.currentPage, searchVal: this.searchVal});
+                  }
+              })
+          }
+          
       },
 
       handleSizeChange(val) {
-        this.fetchData({currentPage: val});
+        this.fetchData({currentPage: val, searchVal: this.searchVal});
       },
       handleCurrentChange(val) {
         this.currentPage = val;
-        this.fetchData({currentPage: val});
+        this.fetchData({currentPage: val, searchVal: this.searchVal});
       }
 
     },
@@ -294,17 +337,20 @@
         selected: [],
         dialogFormVisible: false,
         form: {
-          name: '',
-          province: '',
-          date: '',
-          city: '',
-          address: '',
-          zip: '',
-          id: ''
+          name : '',
+          province : '',
+          date : new Date(),
+          city : '',
+          address : '',
+          zip : '',
+          id : ''
         },
+        addEdit: 'edit',
         formLabelWidth: '120px',
         idIndex: 20,
         tableData3: [],
+
+        searchVal: '',
 
 
         currentPage: 1,
@@ -321,7 +367,7 @@
 
     },
     created() {
-        this.fetchData({currentPage: this.currentPage});// 导航完成之后获取数据
+        this.fetchData({currentPage: this.currentPage, searchVal: this.searchVal});// 导航完成之后获取数据
     }
 }
 </script>

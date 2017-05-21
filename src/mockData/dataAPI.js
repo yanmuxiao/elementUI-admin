@@ -47,25 +47,40 @@ export default {
 
 
 	    // 用户列表返回
-	    mock.onPost('/userList').reply(config => {
-	      let { currentPage } = JSON.parse(config.data);
+	    mock.onGet('/userList').reply(config => {
+	      let { searchVal, currentPage  } = config.params;
+
 	      let start = (currentPage - 1) * 20;
 	      let end = currentPage * 20;
+
+
+	      let filterData;
+	      if(_.trim(searchVal) != ''){
+	      		filterData = _.filter(userList, (o) => {
+		      		return _.toLower(o.name).indexOf(searchVal) > -1 ? true : false;
+		        })
+	      } else {
+	      		filterData = userList;
+	      }
+	      
+
+
 	      return new Promise((resolve, reject) => {
 	        setTimeout(() => {
-	          let totalNum = userList.length;
+	          let totalNum = filterData.length;
 	          if ( totalNum >= 20) {
-	            resolve([200, { code: 200, msg: '请求成功', total: totalNum, pageData: _.slice(userList, start, end) }]);
+	            resolve([200, { code: 200, msg: '请求成功', total: totalNum, pageData: _.slice(filterData, start, end) }]);
 	          } else {
-	            resolve([200, { code: 200, msg: '请求成功1', total: totalNum, pageData: userList }]);
+	            resolve([200, { code: 200, msg: '请求成功1', total: totalNum, pageData: filterData }]);
 	          }
 	        }, 1000);
 	      });
 	    });
 
-	    // 用户列表返回
-	    mock.onPost('/rmUserList').reply(config => {
-	      let { rmObj } = JSON.parse(config.data);
+
+	    // 删除用户
+	    mock.onGet('/rmUserList').reply(config => {
+	      let { rmObj } = config.params;
 	      userList = _.differenceBy(userList, rmObj, 'id');
 	      return new Promise((resolve, reject) => {
 	        setTimeout(() => {
@@ -74,6 +89,37 @@ export default {
 	      });
 	    });
 
+
+	    // 修改用户信息
+	    mock.onGet('/editUserList').reply(config => {
+	      let { editForm } = config.params;
+	      let oIndex = _.findIndex(userList, (obj)=>{
+	      		return obj.id == editForm.id;
+	      });
+	      return new Promise((resolve, reject) => {
+	        setTimeout(() => {
+
+	          if(oIndex > -1) {
+		      		_.assign(userList[oIndex], editForm);
+		      }	
+	          resolve([200, { code: 200, msg: '请求成功' }]);
+	        }, 1000);
+	      });
+	    });
+
+	    // 添加用户
+	    mock.onGet('/addUserList').reply(config => {
+	      let { addUserForm } = config.params;
+	      console.log(addUserForm.id);
+	      addUserForm.id = userList[0].id - 1;
+	      //userList = _.differenceBy(userList, rmObj, 'id');
+	      return new Promise((resolve, reject) => {
+	        setTimeout(() => {
+	          userList.unshift(addUserForm);
+	          resolve([200, { code: 200, msg: '请求成功' }]);
+	        }, 1000);
+	      });
+	    });
 
 	}
 

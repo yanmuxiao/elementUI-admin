@@ -106,11 +106,13 @@
 
 </template>
 
-<style>
+<style lang="scss">
+
+	$WH: 200px;
 	
 	.typography-box {
-		height: 200px;
-	    width: 200px;
+		height: $WH;
+	    width: $WH;
 	    position: relative;
 	    border: 1px solid #eaeefb;
 	    font-size: 40px;
