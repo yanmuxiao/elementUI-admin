@@ -203,6 +203,7 @@
 </template>
 
 <style>
+
   .el-row {
     margin-bottom: 20px;
     &:last-child {
@@ -319,6 +320,7 @@
 		            default: '-'
 		        }]
 			}
+
 		},
 		methods: {
 

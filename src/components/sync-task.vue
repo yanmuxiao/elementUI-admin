@@ -4,7 +4,7 @@
 
       <div class="el-btn-wrap">
           <el-input class="search-ipt"
-            placeholder="请选择日期"
+            placeholder="请输入搜索内容"
             icon="search"
             v-model="searchVal"
             :on-icon-click="searchIconClick">
