@@ -1,3 +1,4 @@
+import babelpolyfill from 'babel-polyfill'
 import Vue from 'vue'
 
 
@@ -5,11 +6,16 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import App from './App.vue'
 import router from './index.js'
+
+import store from './vuex/store'
+import Vuex from 'vuex'
+
+
 import Lodash from 'lodash'
 
 
 Vue.use(ElementUI);
-
+Vue.use(Vuex)
 
 router.beforeEach((to, from, next) => {
 
@@ -57,6 +63,7 @@ router.beforeEach((to, from, next) => {
 
 new Vue({
   router,
+  store,
   el: '#app',
   render: h => h(App)
 })

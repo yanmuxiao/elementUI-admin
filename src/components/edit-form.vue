@@ -1,5 +1,5 @@
 <template>
-    
+    <div><p>{{count}}</p>
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="活动名称">
         <el-input v-model="form.name"></el-input>
@@ -41,10 +41,12 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="childFn">取消</el-button>
       </el-form-item>
     </el-form>
 
+    <img src="../assets/logo.png" />
+    </div>
 
 </template>
 
@@ -54,8 +56,6 @@
     .router-view .line {
         text-align: center;
     }
-
-
 
 
 </style>
@@ -86,6 +86,7 @@
 
 
   export default {
+    props: ['message'],
     data() {
       return {
         form: {
@@ -116,10 +117,24 @@
           .catch((error) => {
               console.log(error);
           })
+      },
+      childFn() {
+          //this.$emit('incrementt');
+          //this.$store.state.count++;
+          this.$store.commit("INCREMENT");
       }
     },
     created() {
         this.fetchData();// 导航完成之后获取数据
+        console.log(this.$store.state.count)
+
+        console.log(this.$parent.$data.userInfo.nickName);
+
+    },
+    computed: {
+      count () {
+        return this.$store.state.count
+      }
     }
   }
 </script>

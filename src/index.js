@@ -22,6 +22,17 @@ import CheckboxVue from './components/form/Checkbox.vue'
 import InputVue from './components/form/Input.vue'
 import InputNumberVue from './components/form/InputNumber.vue'
 import SelectVue from './components/form/SelectLabel.vue'
+import CascaderVue from './components/form/Cascader.vue'
+import SwitchVue from './components/form/Switch.vue'
+import SliderVue from './components/form/Slider.vue'
+import TimePickerVue from './components/form/TimePicker.vue'
+import DatePickerVue from './components/form/DatePicker.vue'
+import DateTimePickerVue from './components/form/DateTimePicker.vue'
+import UploadVue from './components/form/Upload.vue'
+import RateVue from './components/form/Rate.vue'
+import ColorPickerVue from './components/form/ColorPicker.vue'
+import TransferVue from './components/form/Transfer.vue'
+import FormVue from './components/form/Form.vue'
 
 
 import syncTask from './components/sync-task.vue'
@@ -56,6 +67,18 @@ export default new Router({
             { path: '/input', component: InputVue, name: 'input'},
             { path: '/inputNumber', component: InputNumberVue, name: 'inputNumber'},
             { path: '/select', component: SelectVue, name: 'select'},
+            { path: '/cascader', component: CascaderVue, name: 'cascader'},
+            { path: '/switch', component: SwitchVue, name: 'switch'},
+            { path: '/slider', component: SliderVue, name: 'slider'},
+            { path: '/timePicker', component: TimePickerVue, name: 'timePicker'},
+            { path: '/datePicker', component: DatePickerVue, name: 'datePicker'},
+            { path: '/dateTimePicker', component: DateTimePickerVue, name: 'dateTimePicker'},
+            { path: '/upload', component: UploadVue, name: 'upload'},
+            { path: '/rate', component: RateVue, name: 'rate'},
+            { path: '/colorPicker', component: ColorPickerVue, name: 'colorPicker'},
+            { path: '/transfer', component: TransferVue, name: 'transfer'},
+            { path: '/form', component: FormVue, name: 'form'},
+
 
             { path: '/syncTask', component: syncTask, name: 'syncTask'},
             { path: '/editForm', component: editForm, name: 'editForm'}

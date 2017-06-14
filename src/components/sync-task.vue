@@ -368,6 +368,8 @@
     },
     created() {
         this.fetchData({currentPage: this.currentPage, searchVal: this.searchVal});// 导航完成之后获取数据
+
+        console.log(this.$store.state.count)
     }
 }
 </script>
